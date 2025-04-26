@@ -1,0 +1,16 @@
+C:\Users\Sapat\source\repos\MultiParser\bin\Debug\net8.0-windows\MultiParser.exe
+C:\Users\Sapat\source\repos\MultiParser\bin\Debug\net8.0-windows\MultiParser.deps.json
+C:\Users\Sapat\source\repos\MultiParser\bin\Debug\net8.0-windows\MultiParser.runtimeconfig.json
+C:\Users\Sapat\source\repos\MultiParser\bin\Debug\net8.0-windows\MultiParser.dll
+C:\Users\Sapat\source\repos\MultiParser\bin\Debug\net8.0-windows\MultiParser.pdb
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.Form1.resources
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.csproj.GenerateResource.cache
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.AssemblyInfoInputs.cache
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.AssemblyInfo.cs
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.csproj.CoreCompileInputs.cache
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.dll
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\refint\MultiParser.dll
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.pdb
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\MultiParser.genruntimeconfig.cache
+C:\Users\Sapat\source\repos\MultiParser\obj\Debug\net8.0-windows\ref\MultiParser.dll
