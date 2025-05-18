@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             elementsPanel = new Panel();
+            label2 = new Label();
+            textBoxSavePath = new TextBox();
+            buttonSelectPath = new Button();
             buttonAddImg = new Button();
             buttonAddTextElem = new Button();
             siteMapPanel = new FlowLayoutPanel();
@@ -36,12 +39,14 @@
             buttonReadUrls = new Button();
             buttonCheckUrlList = new Button();
             listBoxUrls = new ListBox();
-            textBox1 = new TextBox();
+            textBoxOneUrl = new TextBox();
             label1 = new Label();
             buttonStartBrowser = new Button();
             buttonCopyFromUrl = new Button();
             buttonCopyMany = new Button();
             buttonValidate = new Button();
+            buttonDeleteItems = new Button();
+            textBoxLog = new TextBox();
             elementsPanel.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -49,6 +54,9 @@
             // elementsPanel
             // 
             elementsPanel.BackColor = SystemColors.ActiveBorder;
+            elementsPanel.Controls.Add(label2);
+            elementsPanel.Controls.Add(textBoxSavePath);
+            elementsPanel.Controls.Add(buttonSelectPath);
             elementsPanel.Controls.Add(buttonAddImg);
             elementsPanel.Controls.Add(buttonAddTextElem);
             elementsPanel.Location = new Point(31, 89);
@@ -56,8 +64,37 @@
             elementsPanel.Size = new Size(260, 474);
             elementsPanel.TabIndex = 0;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label2.Location = new Point(61, 343);
+            label2.Name = "label2";
+            label2.Size = new Size(134, 28);
+            label2.TabIndex = 9;
+            label2.Text = "Path to save:";
+            // 
+            // textBoxSavePath
+            // 
+            textBoxSavePath.Location = new Point(18, 374);
+            textBoxSavePath.Name = "textBoxSavePath";
+            textBoxSavePath.ReadOnly = true;
+            textBoxSavePath.Size = new Size(225, 27);
+            textBoxSavePath.TabIndex = 10;
+            // 
+            // buttonSelectPath
+            // 
+            buttonSelectPath.Location = new Point(18, 407);
+            buttonSelectPath.Name = "buttonSelectPath";
+            buttonSelectPath.Size = new Size(225, 42);
+            buttonSelectPath.TabIndex = 9;
+            buttonSelectPath.Text = "Select path";
+            buttonSelectPath.UseVisualStyleBackColor = true;
+            buttonSelectPath.Click += buttonSelectPath_Click;
+            // 
             // buttonAddImg
             // 
+            buttonAddImg.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             buttonAddImg.Location = new Point(18, 80);
             buttonAddImg.Name = "buttonAddImg";
             buttonAddImg.Size = new Size(225, 57);
@@ -68,6 +105,7 @@
             // 
             // buttonAddTextElem
             // 
+            buttonAddTextElem.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             buttonAddTextElem.Location = new Point(18, 17);
             buttonAddTextElem.Name = "buttonAddTextElem";
             buttonAddTextElem.Size = new Size(225, 57);
@@ -106,6 +144,7 @@
             buttonReadUrls.TabIndex = 2;
             buttonReadUrls.Text = "Add Urls";
             buttonReadUrls.UseVisualStyleBackColor = true;
+            buttonReadUrls.Click += buttonReadUrls_Click;
             // 
             // buttonCheckUrlList
             // 
@@ -115,6 +154,7 @@
             buttonCheckUrlList.TabIndex = 1;
             buttonCheckUrlList.Text = "Check List";
             buttonCheckUrlList.UseVisualStyleBackColor = true;
+            buttonCheckUrlList.Click += buttonCheckUrlList_Click;
             // 
             // listBoxUrls
             // 
@@ -124,12 +164,12 @@
             listBoxUrls.Size = new Size(308, 384);
             listBoxUrls.TabIndex = 0;
             // 
-            // textBox1
+            // textBoxOneUrl
             // 
-            textBox1.Location = new Point(311, 26);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(550, 27);
-            textBox1.TabIndex = 3;
+            textBoxOneUrl.Location = new Point(311, 26);
+            textBoxOneUrl.Name = "textBoxOneUrl";
+            textBoxOneUrl.Size = new Size(550, 27);
+            textBoxOneUrl.TabIndex = 3;
             // 
             // label1
             // 
@@ -175,29 +215,54 @@
             // 
             buttonValidate.Location = new Point(311, 521);
             buttonValidate.Name = "buttonValidate";
-            buttonValidate.Size = new Size(550, 42);
+            buttonValidate.Size = new Size(270, 42);
             buttonValidate.TabIndex = 7;
             buttonValidate.Text = "Validating items for finding";
             buttonValidate.UseVisualStyleBackColor = true;
             buttonValidate.Click += buttonValidate_Click;
             // 
+            // buttonDeleteItems
+            // 
+            buttonDeleteItems.Location = new Point(591, 521);
+            buttonDeleteItems.Name = "buttonDeleteItems";
+            buttonDeleteItems.Size = new Size(270, 42);
+            buttonDeleteItems.TabIndex = 8;
+            buttonDeleteItems.Text = "Delete all items";
+            buttonDeleteItems.UseVisualStyleBackColor = true;
+            buttonDeleteItems.Click += buttonDeleteItems_Click;
+            // 
+            // textBoxLog
+            // 
+            textBoxLog.BackColor = Color.Black;
+            textBoxLog.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            textBoxLog.ForeColor = Color.White;
+            textBoxLog.Location = new Point(31, 569);
+            textBoxLog.Multiline = true;
+            textBoxLog.Name = "textBoxLog";
+            textBoxLog.ScrollBars = ScrollBars.Vertical;
+            textBoxLog.Size = new Size(1177, 143);
+            textBoxLog.TabIndex = 9;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1233, 620);
+            ClientSize = new Size(1233, 724);
+            Controls.Add(textBoxLog);
+            Controls.Add(buttonDeleteItems);
             Controls.Add(buttonValidate);
             Controls.Add(buttonCopyMany);
             Controls.Add(buttonCopyFromUrl);
             Controls.Add(buttonStartBrowser);
             Controls.Add(label1);
-            Controls.Add(textBox1);
+            Controls.Add(textBoxOneUrl);
             Controls.Add(panel1);
             Controls.Add(siteMapPanel);
             Controls.Add(elementsPanel);
             Name = "Form1";
             Text = "Parser";
             elementsPanel.ResumeLayout(false);
+            elementsPanel.PerformLayout();
             panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -213,11 +278,16 @@
         private Button buttonReadUrls;
         private Button buttonCheckUrlList;
         private ListBox listBoxUrls;
-        private TextBox textBox1;
+        private TextBox textBoxOneUrl;
         private Label label1;
         private Button buttonStartBrowser;
         private Button buttonCopyFromUrl;
         private Button buttonCopyMany;
         private Button buttonValidate;
+        private Button buttonDeleteItems;
+        private Button buttonSelectPath;
+        private Label label2;
+        private TextBox textBoxSavePath;
+        private TextBox textBoxLog;
     }
 }

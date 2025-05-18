@@ -1,0 +1,30 @@
+﻿# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Rider IDE (якщо раптом використовуєш JetBrains)
+.idea/
+
+# User-specific files
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
