@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.IO;
+using System.Net;
+using System.Windows.Forms;
+using OpenQA.Selenium;
 
 namespace MultiParser.Controls
 {
@@ -19,66 +21,89 @@ namespace MultiParser.Controls
                 Top = 60,
                 Left = 5
             };
+            Controls.Add(InputSavePath);
 
             InputCode.Top = 90;
             IsOne.Top = 120;
-            this.Height = 150;
-
-            this.Controls.Add(InputSavePath);
-            this.Controls.SetChildIndex(InputSavePath, 2);
+            Height = 160;
         }
 
-        public void DownloadImage(string imageUrl, string saveDirectory, string fileName)
+        public override void Parse(
+            IWebDriver driver,
+            int urlIndex,
+            IDictionary<string, List<string>> parsedValues,
+            Action<string> logAction)
+        {
+            string selector = InputCode.Text.Trim();
+            string fieldName = InputName.Text.Trim();
+            string saveFolder = InputSavePath.Text.Trim();
+            if (string.IsNullOrEmpty(selector) ||
+                string.IsNullOrEmpty(fieldName))
+                return;
+
+            try
+            {
+                var elements = IsOne.Checked
+                    ? new[] { driver.FindElement(By.CssSelector(selector)) }
+                    : driver.FindElements(By.CssSelector(selector)).ToArray();
+
+                for (int i = 0; i < elements.Length; i++)
+                {
+                    string url = elements[i].GetAttribute("src");
+                    if (string.IsNullOrWhiteSpace(url))
+                    {
+                        logAction($"Image URL is empty for '{fieldName}'");
+                        continue;
+                    }
+
+                    string filenameBase = $"{fieldName}_{urlIndex}_{i + 1}";
+                    string savedPath = DownloadImage(url, saveFolder, filenameBase, logAction);
+                    if (!string.IsNullOrEmpty(savedPath))
+                    {
+                        logAction($"Downloaded image [{fieldName}_{i + 1}]: {savedPath}");
+                        AddParsedValue(parsedValues, fieldName, savedPath, i);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logAction($"Error parsing image element '{fieldName}': {ex.Message}");
+            }
+        }
+
+        private string DownloadImage(
+            string imageUrl,
+            string saveDirectory,
+            string fileBaseName,
+            Action<string> logAction)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(saveDirectory))
                 {
-                    MessageBox.Show("Шлях до папки для збереження не вказано.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    logAction("Save path not specified for images.");
+                    return null;
                 }
 
                 if (!Directory.Exists(saveDirectory))
-                {
                     Directory.CreateDirectory(saveDirectory);
-                }
 
-                string fullPath = Path.Combine(saveDirectory, fileName);
+                var uri = new Uri(imageUrl);
+                string ext = Path.GetExtension(uri.AbsolutePath);
+                string fname = fileBaseName + (string.IsNullOrEmpty(ext) ? ".jpg" : ext);
+                string path = Path.Combine(saveDirectory, fname);
 
-                if (string.IsNullOrWhiteSpace(imageUrl))
-                {
-                    MessageBox.Show("URL зображення порожній.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                using var client = new WebClient();
+                client.Headers.Add("User-Agent", "Mozilla/5.0");
+                client.DownloadFile(imageUrl, path);
 
-                if (!imageUrl.StartsWith("http"))
-                {
-                    MessageBox.Show($"Некоректний URL зображення: {imageUrl}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                string extension = Path.GetExtension(new Uri(imageUrl).AbsolutePath);
-                if (string.IsNullOrEmpty(extension))
-                {
-                    extension = ".jpg";
-                }
-
-                string savePath = Path.Combine(saveDirectory, fileName + extension);
-
-                using (var client = new System.Net.WebClient())
-                {
-                    client.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
-                    client.DownloadFile(imageUrl, savePath);
-                }
-
-                Console.WriteLine($"Зображення завантажено: {savePath}");
+                return path;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Помилка при завантаженні зображення:\n{ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logAction($"Error downloading image: {ex.Message}");
+                return null;
             }
         }
-
-
     }
 }

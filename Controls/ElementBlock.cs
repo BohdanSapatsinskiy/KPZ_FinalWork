@@ -1,34 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
+using OpenQA.Selenium;
 
 namespace MultiParser.Controls
 {
-    public class ElementBlock : Panel
+    public abstract class ElementBlock : Panel
     {
         public TextBox InputName { get; protected set; }
         public TextBox InputCode { get; protected set; }
         public CheckBox IsOne { get; protected set; }
 
-        public ElementBlock(string labelText)
+        protected ElementBlock(string labelText)
         {
-            this.BackColor = Color.LightGray;
-            this.Width = 500;
-            this.Height = 120;
-            this.BorderStyle = BorderStyle.FixedSingle;
-            this.Margin = new Padding(10);
+            BackColor = Color.LightGray;
+            Width = 500;
+            Height = 120;
+            BorderStyle = BorderStyle.FixedSingle;
+            Margin = new Padding(10);
 
-            Label label = new Label
+            var label = new Label
             {
                 Text = labelText,
                 AutoSize = true,
-                Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 Top = 5,
                 Left = 5
             };
-            this.Controls.Add(label);
+            Controls.Add(label);
 
             InputName = new TextBox
             {
@@ -37,7 +37,7 @@ namespace MultiParser.Controls
                 Top = 30,
                 Left = 5
             };
-            this.Controls.Add(InputName);
+            Controls.Add(InputName);
 
             InputCode = new TextBox
             {
@@ -46,7 +46,7 @@ namespace MultiParser.Controls
                 Top = 60,
                 Left = 5
             };
-            this.Controls.Add(InputCode);
+            Controls.Add(InputCode);
 
             IsOne = new CheckBox
             {
@@ -55,12 +55,27 @@ namespace MultiParser.Controls
                 Left = 5,
                 Width = 200
             };
-            this.Controls.Add(IsOne);
+            Controls.Add(IsOne);
         }
+
         public abstract void Parse(
-           OpenQA.Selenium.IWebDriver driver,
-           int urlIndex,
-           IDictionary<string, List<string>> parsedValues,
-           Action<string> logAction);
+            IWebDriver driver,
+            int urlIndex,
+            IDictionary<string, List<string>> parsedValues,
+            Action<string> logAction);
+
+        protected void AddParsedValue(
+            IDictionary<string, List<string>> dict,
+            string key,
+            string value,
+            int index)
+        {
+            if (!dict.ContainsKey(key))
+                dict[key] = new List<string>();
+            var list = dict[key];
+            while (list.Count <= index)
+                list.Add(string.Empty);
+            list[index] = value;
+        }
     }
 }
