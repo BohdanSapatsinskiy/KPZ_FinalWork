@@ -1,4 +1,4 @@
-﻿namespace MultiParser
+﻿namespace MultiParser.UI
 {
     partial class Form1
     {

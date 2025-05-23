@@ -13,4 +13,28 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="135.0.7049.11400" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Controls\" />
+    <None Remove="Parsing\" />
+    <None Remove="UI\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
+    <Folder Include="Parsing\" />
+    <Folder Include="UI\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Controls\ElementBlock.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Controls\TextElementBlock.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Controls\ImageElementBlock.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="UI\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

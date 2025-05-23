@@ -3,7 +3,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Security.Policy;
 
-namespace MultiParser
+namespace MultiParser.UI
 {
     public partial class Form1 : Form
     {
@@ -57,7 +57,7 @@ namespace MultiParser
             }
             else
             {
-                textBoxLog.AppendText("URL порожній.\r\n");
+                textBoxLog.AppendText("URL пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.\r\n");
             }
         }
 
@@ -70,7 +70,7 @@ namespace MultiParser
 
             if (urls.Count == 0)
             {
-                textBoxLog.AppendText("У списку немає URL-ів для парсингу.\r\n");
+                textBoxLog.AppendText("пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ URL-пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.\r\n");
                 return;
             }
             for (int i = 0; i < urls.Count; i++) {
@@ -98,7 +98,7 @@ namespace MultiParser
 
             if (!hasElements)
             {
-                MessageBox.Show("Немає елементів для валідації.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -108,8 +108,8 @@ namespace MultiParser
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "Текстові файли (*.txt)|*.txt";
-                openFileDialog.Title = "Оберіть файл з посиланнями";
+                openFileDialog.Filter = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (*.txt)|*.txt";
+                openFileDialog.Title = "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -132,7 +132,7 @@ namespace MultiParser
         {
             if (listBoxUrls.Items.Count == 0)
             {
-                MessageBox.Show("Список посилань порожній.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -145,7 +145,7 @@ namespace MultiParser
             }
             catch (UriFormatException)
             {
-                MessageBox.Show("Перше посилання некоректне.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -175,14 +175,14 @@ namespace MultiParser
             listBoxUrls.Items.Clear();
             listBoxUrls.Items.AddRange(filteredUrls.ToArray());
 
-            MessageBox.Show($"Залишено {filteredUrls.Count} посилань з сайту {baseHost}.", "Готово", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {filteredUrls.Count} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ {baseHost}.", "пїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void buttonDeleteItems_Click(object sender, EventArgs e)
         {
             if (siteMapPanel.Controls.Count == 0)
             {
-                MessageBox.Show("Немає елементів для видалення.", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -193,14 +193,14 @@ namespace MultiParser
                 control.Dispose();
             }
 
-            MessageBox.Show("Всі елементи були успішно видалені.", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void buttonSelectPath_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
-                folderDialog.Description = "Оберіть папку для збереження файлу";
+                folderDialog.Description = "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
                 folderDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 
                 if (folderDialog.ShowDialog() == DialogResult.OK)
@@ -220,7 +220,7 @@ namespace MultiParser
 
                     if (string.IsNullOrWhiteSpace(saveDirectory) || string.IsNullOrWhiteSpace(baseFileName))
                     {
-                        MessageBox.Show("Не вказано шлях або ім'я файлу.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ'пїЅ пїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
 
@@ -229,14 +229,14 @@ namespace MultiParser
                     string fullPath = Path.Combine(saveDirectory, baseFileName + extension);
                     if (File.Exists(fullPath))
                     {
-                        MessageBox.Show($"Файл з ім'ям {baseFileName}{extension} вже існує у папці {saveDirectory}. Парсинг не розпочнеться.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ'пїЅпїЅ {baseFileName}{extension} пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ {saveDirectory}. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
 
                     string indexedFilePath = Path.Combine(saveDirectory, baseFileName + "_1" + extension);
                     if (File.Exists(indexedFilePath))
                     {
-                        MessageBox.Show($"Файл з ім'ям {baseFileName}_1{extension} вже існує у папці {saveDirectory}. Парсинг не розпочнеться.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ'пїЅпїЅ {baseFileName}_1{extension} пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ {saveDirectory}. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -249,10 +249,10 @@ namespace MultiParser
         {
             try
             {
-                textBoxLog.AppendText($"Старт парсингу для: {url}\r\n");
+                textBoxLog.AppendText($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ: {url}\r\n");
 
                 var elements = siteMapPanel.Controls.OfType<ElementBlock>().ToList();
-                textBoxLog.AppendText($"Знайдено елементів: {elements.Count}\r\n");
+                textBoxLog.AppendText($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {elements.Count}\r\n");
 
                 if (!CheckFilesForAllElementsBeforeParsing(elements))
                     return;
@@ -261,11 +261,11 @@ namespace MultiParser
                 parser.CsvSaveDirectory = textBoxSavePath.Text.Trim();
                 parser.ParsePage(url, indexUrl);
 
-                textBoxLog.AppendText($"Парсинг завершено для: {url}\r\n");
+                textBoxLog.AppendText($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ: {url}\r\n");
             }
             catch (Exception ex)
             {
-                textBoxLog.AppendText("Помилка: " + ex.Message + "\r\n");
+                textBoxLog.AppendText("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + ex.Message + "\r\n");
             }
         }
     }
