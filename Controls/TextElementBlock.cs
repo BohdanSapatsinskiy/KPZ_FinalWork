@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiParser
+namespace MultiParser.Controls
 {
     public class TextElementBlock : ElementBlock
     {

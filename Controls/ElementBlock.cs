@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiParser
+namespace MultiParser.Controls
 {
     public class ElementBlock : Panel
     {
@@ -57,5 +57,10 @@ namespace MultiParser
             };
             this.Controls.Add(IsOne);
         }
+        public abstract void Parse(
+           OpenQA.Selenium.IWebDriver driver,
+           int urlIndex,
+           IDictionary<string, List<string>> parsedValues,
+           Action<string> logAction);
     }
 }

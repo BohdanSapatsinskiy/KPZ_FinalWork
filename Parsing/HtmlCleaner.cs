@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiParser
+namespace MultiParser.Parsing
 {
     public static class HtmlCleaner
     {
