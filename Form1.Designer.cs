@@ -37,14 +37,12 @@
             siteMapPanel = new FlowLayoutPanel();
             panel1 = new Panel();
             buttonReadUrls = new Button();
-            buttonCheckUrlList = new Button();
             listBoxUrls = new ListBox();
             textBoxOneUrl = new TextBox();
             label1 = new Label();
             buttonStartBrowser = new Button();
             buttonCopyFromUrl = new Button();
             buttonCopyMany = new Button();
-            buttonValidate = new Button();
             buttonDeleteItems = new Button();
             textBoxLog = new TextBox();
             elementsPanel.SuspendLayout();
@@ -129,7 +127,6 @@
             // 
             panel1.BackColor = SystemColors.ActiveBorder;
             panel1.Controls.Add(buttonReadUrls);
-            panel1.Controls.Add(buttonCheckUrlList);
             panel1.Controls.Add(listBoxUrls);
             panel1.Location = new Point(877, 89);
             panel1.Name = "panel1";
@@ -138,23 +135,13 @@
             // 
             // buttonReadUrls
             // 
-            buttonReadUrls.Location = new Point(167, 401);
+            buttonReadUrls.Location = new Point(11, 401);
             buttonReadUrls.Name = "buttonReadUrls";
-            buttonReadUrls.Size = new Size(150, 48);
+            buttonReadUrls.Size = new Size(306, 48);
             buttonReadUrls.TabIndex = 2;
             buttonReadUrls.Text = "Add Urls";
             buttonReadUrls.UseVisualStyleBackColor = true;
             buttonReadUrls.Click += buttonReadUrls_Click;
-            // 
-            // buttonCheckUrlList
-            // 
-            buttonCheckUrlList.Location = new Point(11, 401);
-            buttonCheckUrlList.Name = "buttonCheckUrlList";
-            buttonCheckUrlList.Size = new Size(150, 48);
-            buttonCheckUrlList.TabIndex = 1;
-            buttonCheckUrlList.Text = "Check List";
-            buttonCheckUrlList.UseVisualStyleBackColor = true;
-            buttonCheckUrlList.Click += buttonCheckUrlList_Click;
             // 
             // listBoxUrls
             // 
@@ -211,21 +198,11 @@
             buttonCopyMany.UseVisualStyleBackColor = true;
             buttonCopyMany.Click += buttonCopyMany_Click;
             // 
-            // buttonValidate
-            // 
-            buttonValidate.Location = new Point(311, 521);
-            buttonValidate.Name = "buttonValidate";
-            buttonValidate.Size = new Size(270, 42);
-            buttonValidate.TabIndex = 7;
-            buttonValidate.Text = "Validating items for finding";
-            buttonValidate.UseVisualStyleBackColor = true;
-            buttonValidate.Click += buttonValidate_Click;
-            // 
             // buttonDeleteItems
             // 
-            buttonDeleteItems.Location = new Point(591, 521);
+            buttonDeleteItems.Location = new Point(311, 521);
             buttonDeleteItems.Name = "buttonDeleteItems";
-            buttonDeleteItems.Size = new Size(270, 42);
+            buttonDeleteItems.Size = new Size(550, 42);
             buttonDeleteItems.TabIndex = 8;
             buttonDeleteItems.Text = "Delete all items";
             buttonDeleteItems.UseVisualStyleBackColor = true;
@@ -250,7 +227,6 @@
             ClientSize = new Size(1233, 724);
             Controls.Add(textBoxLog);
             Controls.Add(buttonDeleteItems);
-            Controls.Add(buttonValidate);
             Controls.Add(buttonCopyMany);
             Controls.Add(buttonCopyFromUrl);
             Controls.Add(buttonStartBrowser);
@@ -276,14 +252,12 @@
         private FlowLayoutPanel siteMapPanel;
         private Panel panel1;
         private Button buttonReadUrls;
-        private Button buttonCheckUrlList;
         private ListBox listBoxUrls;
         private TextBox textBoxOneUrl;
         private Label label1;
         private Button buttonStartBrowser;
         private Button buttonCopyFromUrl;
         private Button buttonCopyMany;
-        private Button buttonValidate;
         private Button buttonDeleteItems;
         private Button buttonSelectPath;
         private Label label2;

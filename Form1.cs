@@ -78,7 +78,7 @@ namespace MultiParser
             }
         }
 
-        private void buttonValidate_Click(object sender, EventArgs e)
+        private void Validate()
         {
             bool hasElements = false;
 
@@ -128,14 +128,8 @@ namespace MultiParser
         }
 
 
-        private void buttonCheckUrlList_Click(object sender, EventArgs e)
+        private void CheckUrlList()
         {
-            if (listBoxUrls.Items.Count == 0)
-            {
-                MessageBox.Show("Список посилань порожній.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             string firstUrl = listBoxUrls.Items[0].ToString();
             Uri baseUri;
 
@@ -247,6 +241,8 @@ namespace MultiParser
 
         private void RunParsing(string url, int indexUrl)
         {
+            if(listBoxUrls.SelectedItems.Count != 0) CheckUrlList();
+            Validate();
             try
             {
                 textBoxLog.AppendText($"Старт парсингу для: {url}\r\n");
