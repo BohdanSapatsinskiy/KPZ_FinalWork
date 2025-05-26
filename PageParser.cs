@@ -1,8 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace MultiParser
@@ -116,103 +112,137 @@ namespace MultiParser
             }
 
             if (imageElement.IsOne.Checked)
-            {
-                try
-                {
-                    var el = driver.FindElement(By.CssSelector(code));
-                    string src = el.GetAttribute("src");
-
-                    imageElement.DownloadImage(src, saveDirectory, baseFileName);
-                    logAction($"Фото [{baseFileName}] збережено");
-
-                    string localPath = Path.Combine(saveDirectory, baseFileName + Path.GetExtension(src));
-                    AddParsedValue(baseFileName, localPath);
-                }
-                catch (Exception ex)
-                {
-                    logAction($"Помилка обробки одного фото: {ex.Message}");
-                    return;
-                }
-            }
+                ParseSingleImage(code, saveDirectory, baseFileName, imageElement);
             else
+                ParseMultipleImages(code, saveDirectory, baseFileName, imageElement, urlIndex);
+        }
+
+        private void ParseSingleImage(string cssSelector, string saveDirectory, string baseFileName, ImageElementBlock imageElement)
+        {
+            try
             {
-                try
-                {
-                    // Отримуємо ліміт: довжину першого списку в parsedValues
-                    int maxAllowedImages = 0;
-                    if (parsedValues.Count > 0)
-                    {
-                        var firstKey = parsedValues.Keys.First();
-                        var firstList = parsedValues[firstKey];
-                        maxAllowedImages = firstList.Count;
-                        logAction($"Ліміт фото для завантаження встановлено на {maxAllowedImages} (довжина першого списку текстових даних)");
-                    }
-                    else
-                    {
-                        logAction("parsedValues порожній — пропускаємо парсинг фото.");
-                        return;
-                    }
+                var el = driver.FindElement(By.CssSelector(cssSelector));
+                string src = el.GetAttribute("src");
 
-                    int loadedCount = 0;
-                    int iteration = 0;
+                imageElement.DownloadImage(src, saveDirectory, baseFileName);
+                logAction($"Фото [{baseFileName}] збережено");
 
-                    while (true)
-                    {
-                        var currentEls = driver.FindElements(By.CssSelector(code)).ToList();
-
-                        // Якщо нових елементів немає — вихід
-                        if (currentEls.Count <= loadedCount)
-                            break;
-
-                        for (int i = loadedCount; i < currentEls.Count; i++)
-                        {
-                            // Якщо вже завантажили фото більше ніж дозволено — обриваємо цикл
-                            if (i >= maxAllowedImages)
-                            {
-                                logAction($"Досягнуто максимальну кількість фото: {maxAllowedImages}. Зупинка завантаження.");
-                                break;
-                            }
-
-                            var el = currentEls[i];
-
-                            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", el);
-                            System.Threading.Thread.Sleep(500); // час на підвантаження
-
-                            string src = el.GetAttribute("src");
-                            string indexedFileName = $"{baseFileName}_{urlIndex}_{i + 1}";
-
-
-                            imageElement.DownloadImage(src, saveDirectory, indexedFileName);
-                            logAction($"Фото [{indexedFileName}] збережено");
-
-                            string localPath = Path.Combine(saveDirectory, indexedFileName + Path.GetExtension(src));
-                            AddParsedValue(baseFileName, localPath, i);
-                        }
-
-                        loadedCount = currentEls.Count;
-                        iteration++;
-
-                        if (iteration > 50)
-                        {
-                            logAction("Досягнуто ліміт ітерацій при прокрутці — зупинка.");
-                            break;
-                        }
-
-                        // Якщо вже досягли максимальну кількість фото, теж вихід
-                        if (loadedCount >= maxAllowedImages)
-                            break;
-
-                        System.Threading.Thread.Sleep(1500);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logAction($"Помилка обробки кількох фото: {ex.Message}");
-                    return;
-                }
+                string localPath = Path.Combine(saveDirectory, baseFileName + Path.GetExtension(src));
+                AddParsedValue(baseFileName, localPath);
+            }
+            catch (Exception ex)
+            {
+                logAction($"Помилка обробки одного фото: {ex.Message}");
             }
         }
 
+        private int GetMaxAllowedImages()
+        {
+            if (parsedValues.Count == 0)
+                return 0;
+
+            var firstKey = parsedValues.Keys.First();
+            var firstList = parsedValues[firstKey];
+            int limit = firstList.Count;
+
+            logAction($"Ліміт фото для завантаження встановлено на {limit} (довжина першого списку текстових даних)");
+            return limit;
+        }
+
+        private void ParseMultipleImages(string cssSelector, string saveDirectory, string baseFileName, ImageElementBlock imageElement, int urlIndex)
+        {
+            try
+            {
+                int maxAllowedImages = GetMaxAllowedImages();
+                if (maxAllowedImages == 0)
+                {
+                    logAction("parsedValues порожній — пропускаємо парсинг фото.");
+                    return;
+                }
+
+                int loadedCount = 0;
+                int iteration = 0;
+
+                while (true)
+                {
+                    var currentEls = GetVisibleImageElements(cssSelector);
+
+                    if (NoNewImagesLoaded(currentEls.Count, loadedCount))
+                        break;
+
+                    ProcessNewImages(currentEls, loadedCount, maxAllowedImages, baseFileName, saveDirectory, imageElement, urlIndex);
+
+                    loadedCount = currentEls.Count;
+                    iteration++;
+
+                    if (ShouldStop(iteration, loadedCount, maxAllowedImages))
+                        break;
+
+                    System.Threading.Thread.Sleep(1500);
+                }
+            }
+            catch (Exception ex)
+            {
+                logAction($"Помилка обробки кількох фото: {ex.Message}");
+            }
+        }
+
+        private List<IWebElement> GetVisibleImageElements(string cssSelector)
+        {
+            return driver.FindElements(By.CssSelector(cssSelector)).ToList();
+        }
+
+        private bool NoNewImagesLoaded(int currentCount, int loadedCount)
+        {
+            return currentCount <= loadedCount;
+        }
+
+        private bool ShouldStop(int iteration, int loadedCount, int maxAllowedImages)
+        {
+            if (iteration > 50)
+            {
+                logAction("Досягнуто ліміт ітерацій при прокрутці — зупинка.");
+                return true;
+            }
+
+            if (loadedCount >= maxAllowedImages)
+            {
+                logAction("Досягнуто максимальну кількість фото — зупинка.");
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ProcessNewImages(List<IWebElement> elements, int startIndex, int maxAllowedImages, string baseFileName, string saveDirectory, ImageElementBlock imageElement, int urlIndex)
+        {
+            for (int i = startIndex; i < elements.Count && i < maxAllowedImages; i++)
+            {
+                var el = elements[i];
+
+                ScrollToElement(el);
+                System.Threading.Thread.Sleep(500);
+
+                string src = el.GetAttribute("src");
+                string indexedFileName = $"{baseFileName}_{urlIndex}_{i + 1}";
+
+                SaveImage(src, saveDirectory, indexedFileName, baseFileName, imageElement, i);
+            }
+        }
+
+        private void ScrollToElement(IWebElement element)
+        {
+            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
+        }
+
+        private void SaveImage(string src, string saveDirectory, string fileName, string baseFileName, ImageElementBlock imageElement, int index)
+        {
+            imageElement.DownloadImage(src, saveDirectory, fileName);
+            logAction($"Фото [{fileName}] збережено");
+
+            string localPath = Path.Combine(saveDirectory, fileName + Path.GetExtension(src));
+            AddParsedValue(baseFileName, localPath, index);
+        }
 
         private void SaveResultsToCsv(string filePath)
         {
