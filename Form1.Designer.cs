@@ -26,34 +26,6 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-       namespace MultiParser
-{
-    partial class Form1
-    {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
        // using System.Drawing;
 // using System.Windows.Forms;
 
@@ -233,29 +205,6 @@ private static Button CreateAccentButton(string text, Image? icon = null) =>
             MouseDownBackColor = Color.FromArgb(0,  99, 177)
         }
     };
-
-
-        #endregion
-
-        private Panel elementsPanel;
-        private Button buttonAddImg;
-        private Button buttonAddTextElem;
-        private FlowLayoutPanel siteMapPanel;
-        private Panel panel1;
-        private Button buttonReadUrls;
-        private ListBox listBoxUrls;
-        private TextBox textBoxOneUrl;
-        private Label label1;
-        private Button buttonStartBrowser;
-        private Button buttonCopyFromUrl;
-        private Button buttonCopyMany;
-        private Button buttonDeleteItems;
-        private Button buttonSelectPath;
-        private Label label2;
-        private TextBox textBoxSavePath;
-        private TextBox textBoxLog;
-    }
-}
 
 
         #endregion
